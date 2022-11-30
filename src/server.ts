@@ -30,9 +30,9 @@ class Server extends EventEmitter {
   }
 
   async listen (addrInfo: { port: number } | number) {
-    return await new Promise<WebSocketServer>(resolve => {
-      this.once('listening', () => resolve(this))
-      this.server.listen(typeof addrInfo === 'number' ? addrInfo : addrInfo.port)
+    return await new Promise<WebSocketServer>((resolve, reject) => {
+      this.server.once('error', (e) => reject(e))
+      this.server.listen(typeof addrInfo === 'number' ? addrInfo : addrInfo.port, () => resolve(this))
     })
   }
 
