@@ -19,7 +19,7 @@ describe('address', () => {
     const server1 = WS.createServer()
     await server1.listen(55215)
     const server2 = WS.createServer()
-    await expect(server2.listen(55215)).to.be.rejectedWith('EADDRESSINUSE')
+    await expect(server2.listen(55215)).to.be.eventually.rejectedWith('listen EADDRINUSE')
     await server1.close()
   })
 })
